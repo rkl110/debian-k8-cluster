@@ -1,0 +1,29 @@
+---
+# tasks file for setup_hostname
+#
+- block:
+  - name: Set hostname (via module)
+    hostname:
+      name: "{{ custom_inventory_hostname }}"
+
+  - name: setup /etc/hosts
+    lineinfile:
+      dest: /etc/hosts
+      regexp: "{{ item.regexp }}"
+      line: "{{ item.line }}"
+      state: present
+      backup: yes
+    with_items: "{{ canonical_names }}"
+
+  when: inventory_hostname is defined
+  tags: setup_static_hostname
+
+- name: hostname in root GECOS
+  user:
+    name: root
+    comment: "{{ custom_inventory_hostname }}"
+  tags: root_gecos
+
+- name: Refresh facts
+  setup:
+    gather_subset: min

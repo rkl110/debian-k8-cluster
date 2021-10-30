@@ -1,0 +1,14 @@
+---
+# defaults file for setup_hostname
+
+domain_name: fritz.box
+custom_inventory_hostname: "{{ inventory_hostname }}"
+custom_canonical_hostname: "{{ custom_inventory_hostname }}.{{ domain_name }} {{ custom_inventory_hostname }}"
+
+canonical_names:
+  - regexp: "^127.0.1.1"
+    line: "127.0.1.1\t{{ custom_canonical_hostname }}"
+  - regexp: "^127.0.0.1"
+    line: "127.0.0.1\tlocalhost"
+  - regexp: "^{{ ansible_default_ipv4.address }}"
+    line: "{{ ansible_default_ipv4.address }}\t{{ custom_canonical_hostname }}"

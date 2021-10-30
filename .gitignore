@@ -1,0 +1,5 @@
+# Exclude Files
+ansible.cfg
+ansible_collections/
+.vault_pass
+vaultvars.yml

@@ -1,0 +1,8 @@
+---
+# defaults file for install_k8
+#
+packages:
+- "containerd"
+- "kubelet"
+- "kubectl"
+- "kubeadm"

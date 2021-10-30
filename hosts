@@ -1,0 +1,14 @@
+[k8cluster:children]
+k8masters
+k8nodes
+
+[k8masters]
+kmaster
+
+[k8nodes]
+knode[01:02]
+
+
+[all:vars]
+ansible_user=root
+ansible_python_interpreter=/usr/bin/python3

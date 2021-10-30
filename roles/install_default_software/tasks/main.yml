@@ -1,0 +1,27 @@
+---
+# tasks file for install_default_software
+
+
+- name: Install a list of packages
+  apt:
+    pkg:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - git
+    - gnupg2
+    - htop
+    - man
+    - ncdu
+    - screen
+    - sudo
+    - vim-nox
+    - wget
+
+- name: template vimrc.local
+  template:
+    src: vimrc.local.j2
+    dest: /etc/vim/vimrc.local
+    mode: 0644
+    owner: root
+    group: root

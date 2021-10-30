@@ -1,0 +1,7 @@
+---
+# defaults file for setup_nullmailer
+
+adminaddr: root
+allmailfrom: root
+defaultdomain: root
+remotes: root

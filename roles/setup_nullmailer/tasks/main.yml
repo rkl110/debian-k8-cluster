@@ -1,0 +1,26 @@
+---
+# tasks file for setup_nullmailer
+#
+- name: Install Nullmailer
+  apt:
+    pkg:
+      - nullmailer
+
+- name: Template Nullmailer Files
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode }}"
+    group: "{{ item.group }}"
+    owner: "{{ item.owner }}"
+  with_items:
+    - { src: adminaddr.j2, dest: /etc/nullmailer/adminaddr, mode: "0644", group: root, owner: root }
+    - { src: allmailfrom.j2, dest: /etc/nullmailer/allmailfrom, mode: "0644", group: root, owner: root }
+    - { src: defaultdomain.j2, dest: /etc/nullmailer/defaultdomain, mode: "0644", group: root, owner: root }
+    - { src: remotes.j2, dest: /etc/nullmailer/remotes, mode: "0600", group: mail, owner: mail }
+    - { src: mailname.j2, dest: /etc/mailname, mode: "0644", group: root, owner: root }
+
+- name: Install mailutils
+  apt:
+    pkg:
+      - mailutils

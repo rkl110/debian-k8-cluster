@@ -1,0 +1,47 @@
+---
+- name: Load Vars and make sure python3 is present
+  hosts: all
+  gather_facts: no
+
+  tasks:
+  - name: install python3
+    ansible.builtin.raw: bash -c "test -e /usr/bin/python3 || ( apt update && apt install python3-minimal -y )"
+  - name: Import vaultvars.yml
+    include_vars: vaultvars.yml
+  
+- name: Prepare Hosts
+  hosts: all
+  gather_facts: yes
+  roles:
+    - { role: setup_hostname }
+    - { role: install_default_software }
+    - { role: setup_nullmailer }
+      #    - { role: install_k8 }
+
+- name: Setup K8 Master
+  hosts: k8masters
+  gather_facts: no
+  roles:
+    - { role: setup_k8-master }
+  tasks:
+  - name: get join command
+    shell: kubeadm token create --print-join-command
+    register: join_command_raw
+  
+  - name: set join command
+    set_fact:
+      join_command: "{{ join_command_raw.stdout_lines[0] }}"
+
+- name: Join Cluster
+  hosts: k8nodes
+  gather_facts: true
+  roles:
+    - { role: setup_k8-master }
+  tasks:
+ 
+  - name: join cluster	
+    shell: "{{ hostvars['kmaster'].join_command }} >> node_joined.txt"
+    args:
+      chdir: $HOME
+      creates: node_joined.txt
+    run_once: true

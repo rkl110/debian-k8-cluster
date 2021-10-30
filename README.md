@@ -1,5 +1,7 @@
 # README
 
+# far from being perfect
+
 Ansible Playbook, to Setup K8-Cluster on Debian 11 minimal installation (only SSH).
 
 This Playbook does not cover Security.

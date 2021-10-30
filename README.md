@@ -1,6 +1,8 @@
 # README
 
-Ansible Playbook, to Setup K8-Cluster on Debian 10
+Ansible Playbook, to Setup K8-Cluster on Debian 11 minimal installation (only SSH).
+
+This Playbook does not cover Security.
 
 ### Export ANSIBLE_VAULT_PASSWORD_FILE for Vaultpass
 ```bash
